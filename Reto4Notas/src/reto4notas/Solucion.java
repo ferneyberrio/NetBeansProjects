@@ -9,37 +9,41 @@ public class Solucion {
         //EN ESTE ESPACIO PONER SU LÓGICA
 //        ArrayList<Estudiante> notas = new ArrayList<>();     // crear Array de tipo Estudiante
 //        ArrayList<Object> notas = new ArrayList<Object>();     // crear Array de tipo object
-  
 
         Object[] notas = {0.0d, "", 0.0d, "", 0.0d};    // array tipo Object
-        
+
         /*declarar variables*/
         double suma = 0.0d;
         double promedio = 0.0d;
-        double menor = 1000000.0;
-        double mayor = 0.0;
+        double menor = 5.0d;
+        double mayor = 0.0d;
         double miNota = 0.0d;
         String miEstud = "";
         String estMayorNota = "";
         String estMenorNota = "";
-        
+        int cont = 0;
+
         /* Obtener datos */
-        for (Estudiante i : grupo) {   // por cada i del tipo Estudiante
-            miNota = i.getNota();
-            miEstud = i.getNombreCompleto();
+        do {
+            Estudiante note = new Estudiante();    // crear objeto tipo Estudiante
+            note = grupo.get(cont);                // almacenar primera posición del arrays grupo
 
-            suma += i.getNota();     // sumar la nota del estudiante i
+            miNota = note.getNota();              // almacenar la nota del array actual
+            miEstud = note.getNombreCompleto();   // almacenar el nombre del array actual
 
-            if (miNota < menor) {
-                menor = miNota;
-                estMenorNota = miEstud;
+            if (miNota <= menor) {               // si nota actual es menor al menor
+                menor = miNota;                  // actualizar menor
+                estMenorNota = miEstud;          // actualizar nombre
             }// fin if
-
             if (miNota > mayor) {
                 mayor = miNota;
                 estMayorNota = miEstud;
-            }// fin if        
-        }// fin for
+            }// fin if 
+            suma += note.getNota();     // sumar la nota del estudiante i
+
+            cont++;
+        } while (cont < grupo.size());
+
         promedio = suma / grupo.size();
 
         notas[0] = promedio;
@@ -51,6 +55,5 @@ public class Solucion {
         return notas;
 
     }// fin método
-
 
 }// fin clase
