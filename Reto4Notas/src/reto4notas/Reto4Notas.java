@@ -6,6 +6,7 @@ public class Reto4Notas {
 
     public static void main(String[] args) {
         Solucion rep = new Solucion();
+        /* 5X4 */
         ArrayList<Estudiante> grupo = new ArrayList<>();
         grupo.add(new Estudiante("John Doe", "0123", 5.0, 4, 8));
         grupo.add(new Estudiante("Jane Doe", "9283", 4.1, 7, 13));
