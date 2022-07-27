@@ -20,17 +20,17 @@ public class conexion {
             cnn = DriverManager.getConnection("jdbc:mysql://localhost/cooperativa2", "root", "root");
             JOptionPane.showMessageDialog(null, "Conexion OK");
         } catch (Exception e) {
-            System.out.println(e);
+            System.out.println(e);  // mostrar
         }
         
         return cnn;   // retornar la conexión
         
     }// fin método
     
-    public static void main(String[]arg){
-       
-    conexion con = new conexion();   // creo objeto de tipo conexion
-    con.coneccionDB();
-    }// fin método main
+//    public static void main(String[]arg){
+//       
+//    conexion con = new conexion();   // creo objeto de tipo conexion
+//    con.coneccionDB();
+//    }// fin método main
 
 }// fin clase
