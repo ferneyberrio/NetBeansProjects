@@ -13,10 +13,9 @@ public class ClienteCRUD {
 
     conexion con = new conexion();   // objeto de la clase conexion
     Connection cnn = con.coneccionDB();
-    
-    
 
     PreparedStatement ps;   // traductor entre java y mysql
+    ResultSet rs;  //guarda registros completos y coloco nombre rs
 
     public int insertar(Cliente cli) {
         //Cliente datos = new Cliente(0, "", "", "");
@@ -31,13 +30,14 @@ public class ClienteCRUD {
             x = ps.executeUpdate();                              // enviar para insertar datos(retorna int)
 
         } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "Error en Inseratr" + e);
+            JOptionPane.showMessageDialog(null, "Error en Inseratar : " + e);
         }
         return x;
 
     }// fin clase
 
-    public void actualizar(Cliente cli) {
+    public int actualizar(Cliente cli) {
+        int _x = 0;
         try {
             ps = cnn.prepareStatement("UPDATE Cliente set  nombre=?, apellido=?, correo=?, celular=? where documento=?");
             ps.setString(1, cli.getNombre());            // para la posicion 1 de la BD
@@ -45,11 +45,12 @@ public class ClienteCRUD {
             ps.setString(3, cli.getCorreo());            // para la posicion 3 de la BD
             ps.setString(4, cli.getCelular());            // para la posicion 4 de la BD      
             ps.setInt(5, cli.getDocumento());    // para la posicion 5 de la BD
-            ps.executeUpdate();                              // enviar para insertar datos(retorna int)
+            _x = ps.executeUpdate();                              // enviar para insertar datos(retorna int)
 
         } catch (SQLException e) {
-            System.out.println("Error en actualización" + e);
+            System.out.println("Error en actualización  :  " + e);
         }
+        return _x;
     }// fin método
 
     public void eliminar(Cliente cli) {
@@ -65,17 +66,24 @@ public class ClienteCRUD {
         }
 
     }// fin método
-    
-    //public ArrayList<Cliente> consulta(){
-    public void consulta(){
+
+    public ArrayList<Cliente> consulta() {
+
+        ArrayList<Cliente> lista = new ArrayList<>();
         try {
             ps = cnn.prepareStatement("SELECT*FROM Cliente");
+            rs = ps.executeQuery();      //hacemos q se vincule la sentencia
+            // guardar datos
+            while (rs.next()) {
+                Cliente cliente = new Cliente(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4)); // objeto cliente de tipo Cliente   
+                lista.add(cliente);
+            }// fin while
+
         } catch (SQLException ex) {
             System.out.println("consulta" + ex);
         }
-        
-        
+        return lista;
+
     }//fi método y retorna un array list de tipo Cliente
-    
 
 }// fin clase
